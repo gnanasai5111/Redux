@@ -225,3 +225,93 @@ unsubscribe();
   const store = createStore(rootReducer, applyMiddleware(logger));
 
   ```
+
+  ### Async action Creators
+
+  Redux thunk- It allows the action creator to return a function instead of an object.
+
+  ```
+import axios, * as others from "axios";
+const redux = require("redux");
+const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
+const reduxLogger = require("redux-logger");
+const logger = reduxLogger.createLogger();
+const applyMiddleware = redux.applyMiddleware;
+
+const thunkMiddleware = require("redux-thunk").default;
+
+const FETCH_USERS_LOADING = "FETCH_USERS_LOADING";
+const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
+
+function fetchUsersLoading() {
+  return {
+    type: FETCH_USERS_LOADING,
+    payload: null
+  };
+}
+function fetchUsersSuccess(data) {
+  return {
+    type: FETCH_USERS_SUCCESS,
+    payload: data
+  };
+}
+function fetchUsersFailure(err) {
+  return {
+    type: FETCH_USERS_FAILURE,
+    payload: err
+  };
+}
+
+const initialState = { loading: false, success: null, error: false };
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_USERS_LOADING:
+      return { ...state, loading: true };
+    case FETCH_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+        error: false
+      };
+    case FETCH_USERS_FAILURE:
+      return { ...state, loading: false, error: action.payload, success: null };
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  user: reducer
+});
+const store = createStore(
+  rootReducer,
+  applyMiddleware(logger, thunkMiddleware)
+);
+
+const fetchUsers = () => (dispatch) => {
+  dispatch(fetchUsersLoading());
+  axios
+    .get("https://jsonplaceholder.typicode.com/users")
+    .then((res) => {
+      dispatch(fetchUsersSuccess(res.data.map((i) => i.id)));
+    })
+    .catch((e) => {
+      dispatch(fetchUsersFailure(e.message));
+    });
+};
+
+const unsubscribe = store.subscribe(() =>
+  console.log("updated state", store.getState())
+);
+store.dispatch(fetchUsers());
+
+console.log(store.getState());
+
+// unsubscribe();
+
+
+  ```
