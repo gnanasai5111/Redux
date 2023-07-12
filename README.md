@@ -28,3 +28,34 @@
   ```
   Reducer- (prevState,action)=>newState
   ```
+  
+### Terminology
+
+  - Action is an object that contains type as a property.You can also add extra properties like payload etc.
+  - Action Creator is a function that returns an action.
+
+```
+// Action
+const BUY_CAKE = "BUY_CAKE";
+
+// Action Creator 
+function buyCake() {
+  return {
+    type: BUY_CAKE,
+    payload: "First redux action"
+  };
+}
+
+// default or initial state
+const initialState = { cakes: 10 };
+
+// reducer
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return { ...state, cakes: state.cakes - 1 };
+    default:
+      return state;
+  }
+};
+```
