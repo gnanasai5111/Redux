@@ -209,3 +209,19 @@ store.dispatch(addCake());
 unsubscribe();
 
 ```
+
+### Middlewarre
+
+- It is the suggested way to extend redux with custom functionality
+
+  ```
+
+  const redux = require("redux");
+  const createStore = redux.createStore;
+  const combineReducers = redux.combineReducers;
+  const reduxLogger = require("redux-logger");
+  const logger = reduxLogger.createLogger();
+  const applyMiddleware = redux.applyMiddleware;
+  const store = createStore(rootReducer, applyMiddleware(logger));
+
+  ```
