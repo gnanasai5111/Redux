@@ -311,10 +311,11 @@ store.dispatch(fetchUsers());
 
 console.log(store.getState());
 
+```
 // unsubscribe();
 
 
-  ```
+
 
 ### React-Redux
 
@@ -331,16 +332,18 @@ const mapDispatchToProps=(dispatch,oldProps)=>{
 }
 export default connect (mapStateToProps,mapDispatchToProps)(UserFile)
 
-// using Hooks
+  // using Hooks
 const dispatch=useDispatch();
 dispatch(addUser());
 const userReducer=useSelector((state)=>state.users.user));
+
 ```
 
 ### async
 - For performing async operations we use middleware Redux-thunk
 
 ```
+
 import {
   GET_USERS_FAILURE,
   GET_USERS_LOADING,
