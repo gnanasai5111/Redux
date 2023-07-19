@@ -406,3 +406,54 @@ return {...state,address:{...state.address,street:action.payload},}
 // with immer
 return produce(state,(draft)=>{draft.address.street=action.payload})
 ```
+
+
+```
+
+const createSlice = require("@reduxjs/toolkit").createSlice;
+const initialState = {
+  noOfCakes: 10
+};
+
+const cakeSlice = createSlice({
+  name: "cake",
+  initialState,
+  reducers: {
+    ordered: (state, action) => {
+      state.noOfCakes--;
+    },
+    restocked: (state, action) => {
+      state.noOfCakes += action.payload;
+    }
+  }
+});
+
+module.exports = cakeSlice.reducer;
+module.exports.cakeActions = cakeSlice.actions;
+
+const configureStore = require("@reduxjs/toolkit").configureStore;
+const cakeReducer = require("../features/cake/cakeSlice");
+const store = configureStore({
+  reducer: {
+    cake: cakeReducer
+  }
+});
+module.exports=store
+
+const store = require("./app/store");
+const cakeActions = require("./app/features/cake/cakeSlice").cakeActions;
+
+console.log(store.getState());
+
+const unsubscribe = store.subscribe(() => {
+  console.log("updated state", store.getState());
+});
+
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.restocked(4));
+
+
+
+```
