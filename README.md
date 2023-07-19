@@ -425,7 +425,14 @@ const cakeSlice = createSlice({
     restocked: (state, action) => {
       state.noOfCakes += action.payload;
     }
-  }
+  },
+  extraReducers:{
+['icecream/odered']:(state,action)=>{  
+state.noOfCakes--;
+},
+extraReducers:(builder)=>{
+builder.addCase(icecreamActions.ordered,(state,action)=>{state.noOfCakes--})
+}
 });
 
 module.exports = cakeSlice.reducer;
@@ -464,3 +471,8 @@ store.dispatch(cakeActions.restocked(4));
 
 
 ```
+
+
+### Redux tookit example
+
+https://codesandbox.io/s/redux-toolkit-react-3fxmzn?file=/src/app/features/user/UserView.jsx
