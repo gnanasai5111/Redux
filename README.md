@@ -386,3 +386,10 @@ export const getUsers = () => (dispatch) => {
 
 ```
 
+### Redux toolkit
+
+- Configuring redux in an app seems complicated.
+- In addition to redux, a lot of other packages have to be installed to get redux to do something useful.
+- Redux required too much of boilerplate code.
+- Redux toolkit serves as an abstraction over redux. It hides the difficult parts ensuring you have a good developer experience.
+
