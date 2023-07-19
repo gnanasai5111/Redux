@@ -315,3 +315,71 @@ console.log(store.getState());
 
 
   ```
+
+### React-Redux
+
+```
+const mapStateToProps=(state,oldProps)=>{
+    return {
+     user:state.users.user
+      }
+}
+const mapDispatchToProps=(dispatch,oldProps)=>{
+      return {
+      addUser:()=>dispatch(addUser()),
+      }
+}
+export default connect (mapStateToProps,mapDispatchToProps)(UserFile)
+
+// using Hooks
+const dispatch=useDispatch();
+dispatch(addUser());
+const userReducer=useSelector((state)=>state.users.user));
+```
+
+### async
+- For performing async operations we use middleware Redux-thunk
+
+```
+import {
+  GET_USERS_FAILURE,
+  GET_USERS_LOADING,
+  GET_USERS_SUCCESS
+} from "./userTypes";
+import axios from "axios";
+
+export const getUsersSuccess = (data) => {
+  return {
+    type: GET_USERS_SUCCESS,
+    payload: data
+  };
+};
+export const getUsersLoading = (data) => {
+  return {
+    type: GET_USERS_LOADING,
+    payload: null
+  };
+};
+export const getUsersFailure = (err) => {
+  return {
+    type: GET_USERS_FAILURE,
+    payload: err
+  };
+};
+
+export const getUsers = () => (dispatch) => {
+  dispatch(getUsersLoading());
+  axios
+    .get("https://jsonplaceholder.typicode.com/users")
+    .then((res) => {
+      console.log(res.data);
+      dispatch(getUsersSuccess(res.data));
+    })
+    .catch((e) => {
+      dispatch(getUsersFailure(e.message));
+    });
+};
+
+
+```
+
