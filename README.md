@@ -476,3 +476,4 @@ store.dispatch(cakeActions.restocked(4));
 ### Redux tookit example
 
 https://codesandbox.io/s/redux-toolkit-react-3fxmzn?file=/src/app/features/user/UserView.jsx
+https://codesandbox.io/s/redux-toolkit-777hgp?file=/src/app/store.js
