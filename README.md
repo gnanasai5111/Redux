@@ -230,7 +230,7 @@ unsubscribe();
 
   Redux thunk- It allows the action creator to return a function instead of an object.
 
-  ```
+```
 import axios, * as others from "axios";
 const redux = require("redux");
 const createStore = redux.createStore;
