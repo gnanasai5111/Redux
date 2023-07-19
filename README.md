@@ -393,3 +393,16 @@ export const getUsers = () => (dispatch) => {
 - Redux required too much of boilerplate code.
 - Redux toolkit serves as an abstraction over redux. It hides the difficult parts ensuring you have a good developer experience.
 
+
+### Immer
+- To write better reducer.It is used because if there are nested state ,updating that state gonna be challenging.
+
+```
+  import {produce} from 'immer'
+// without immer
+
+return {...state,address:{...state.address,street:action.payload},}
+
+// with immer
+return produce(state,(draft)=>{draft.address.street=action.payload})
+```
